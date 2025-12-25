@@ -1,13 +1,16 @@
 import { useState, useRef } from 'react';
+import { optimizeImage, formatFileSize } from '../../utils/imageOptimization';
 import './ImageUploader.css';
 
 const ImageUploader = ({ onImageSelect, existingImageUrl, label = 'Cover Image', folder = 'articles' }) => {
     const [preview, setPreview] = useState(existingImageUrl || null);
     const [uploading, setUploading] = useState(false);
+    const [optimizing, setOptimizing] = useState(false);
     const [error, setError] = useState(null);
+    const [optimizationInfo, setOptimizationInfo] = useState(null);
     const fileInputRef = useRef(null);
 
-    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    const MAX_SIZE = 10 * 1024 * 1024; // 10MB (before optimization)
     const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
     const handleFileSelect = async (e) => {
@@ -20,33 +23,61 @@ const ImageUploader = ({ onImageSelect, existingImageUrl, label = 'Cover Image',
             return;
         }
 
-        // Validate file size
+        // Validate file size (before optimization)
         if (file.size > MAX_SIZE) {
-            setError('Image size must be less than 5MB');
+            setError('Image size must be less than 10MB');
             return;
         }
 
         setError(null);
-        setUploading(true);
+        setOptimizing(true);
+        setOptimizationInfo(null);
 
-        // Create preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setPreview(reader.result);
-        };
-        reader.readAsDataURL(file);
+        try {
+            // Optimize image to WebP
+            const result = await optimizeImage(file, {
+                quality: 0.85,
+                maxWidth: 1920,
+                maxHeight: 1080
+            });
 
-        // Pass file to parent component for upload
-        if (onImageSelect) {
-            onImageSelect(file);
+            // Create WebP file object
+            const webpFile = new File(
+                [result.blob],
+                file.name.replace(/\.[^.]+$/, '.webp'),
+                { type: 'image/webp' }
+            );
+
+            // Store optimization info for display
+            setOptimizationInfo({
+                original: formatFileSize(result.originalSize),
+                optimized: formatFileSize(result.optimizedSize),
+                reduction: result.reduction
+            });
+
+            // Create preview from optimized image
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(webpFile);
+
+            // Pass optimized file to parent component
+            if (onImageSelect) {
+                onImageSelect(webpFile);
+            }
+        } catch (err) {
+            console.error('Image optimization error:', err);
+            setError('Failed to optimize image. Please try another image.');
+        } finally {
+            setOptimizing(false);
         }
-
-        setUploading(false);
     };
 
     const handleRemove = () => {
         setPreview(null);
         setError(null);
+        setOptimizationInfo(null);
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
@@ -62,10 +93,34 @@ const ImageUploader = ({ onImageSelect, existingImageUrl, label = 'Cover Image',
             {preview ? (
                 <div className="preview-container">
                     <img src={preview} alt="Preview" className="preview-image" />
+
+                    {/* Show optimization info */}
+                    {optimizationInfo && (
+                        <div className="optimization-info" style={{
+                            marginTop: '12px',
+                            padding: '12px',
+                            backgroundColor: '#f0fdf4',
+                            border: '1px solid #86efac',
+                            borderRadius: '8px',
+                            fontSize: '13px'
+                        }}>
+                            <div style={{ color: '#16a34a', fontWeight: '600', marginBottom: '4px' }}>
+                                ✓ Image Optimized to WebP
+                            </div>
+                            <div style={{ color: '#4b5563' }}>
+                                {optimizationInfo.original} → {optimizationInfo.optimized}
+                                <span style={{ color: '#16a34a', fontWeight: '600', marginLeft: '8px' }}>
+                                    ({optimizationInfo.reduction}% smaller)
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
                     <button
                         type="button"
                         className="remove-button"
                         onClick={handleRemove}
+                        style={{ marginTop: optimizationInfo ? '12px' : '0' }}
                     >
                         Remove Image
                     </button>

@@ -30,8 +30,9 @@ export const ARTICLE_STATUS = {
 
 // Image upload constraints
 export const IMAGE_CONSTRAINTS = {
-    MAX_SIZE: 5 * 1024 * 1024, // 5MB
+    MAX_SIZE: 10 * 1024 * 1024, // 10MB (before optimization)
     ALLOWED_TYPES: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+    ALLOWED_EXTENSIONS: ['.jpg', '.jpeg', '.png', '.webp'],
     FOLDER_ARTICLES: 'articles',
     FOLDER_PROFILES: 'profiles',
     FOLDER_TEMP: 'temp'
