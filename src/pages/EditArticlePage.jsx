@@ -4,7 +4,7 @@ import { useAuthContext } from '../components/auth/AuthProvider';
 import RichTextEditor from '../components/editor/RichTextEditor';
 import ImageUploader from '../components/editor/ImageUploader';
 import { getArticleBySlug, updateArticle } from '../services/firestore';
-import { uploadImage } from '../services/azure';
+import { uploadImage, deleteBlob, extractBlobPath } from '../services/azure';
 import { CATEGORIES, ARTICLE_STATUS } from '../utils/constants';
 import { Save, Send, ArrowLeft } from 'lucide-react';
 
@@ -25,6 +25,7 @@ const EditArticlePage = () => {
 
     const [coverImage, setCoverImage] = useState(null);
     const [coverImageUrl, setCoverImageUrl] = useState('');
+    const [originalCoverUrl, setOriginalCoverUrl] = useState(''); // Track original for deletion
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
@@ -60,7 +61,16 @@ const EditArticlePage = () => {
                     content: article.content,
                     status: article.status
                 });
+                setFormData({
+                    title: article.title,
+                    slug: article.slug,
+                    category: article.category,
+                    tags: article.tags?.join(', ') || '',
+                    content: article.content,
+                    status: article.status
+                });
                 setCoverImageUrl(article.coverImageUrl || '');
+                setOriginalCoverUrl(article.coverImageUrl || ''); // Store original
             } else {
                 setError(result.error || 'Article not found');
             }
@@ -158,6 +168,21 @@ const EditArticlePage = () => {
             const result = await updateArticle(articleId, articleData);
 
             if (result.success) {
+                // If update successful, check if we need to delete the old image
+                // Delete if: there was an original image AND (it was removed OR it was replaced)
+                if (originalCoverUrl && originalCoverUrl !== articleData.coverImageUrl) {
+                    const blobPath = extractBlobPath(originalCoverUrl);
+                    if (blobPath) {
+                        try {
+                            console.log('Deleting old cover image:', blobPath);
+                            await deleteBlob(blobPath);
+                        } catch (deleteErr) {
+                            console.error('Failed to delete old image:', deleteErr);
+                            // Don't block navigation on delete failure, it's just cleanup
+                        }
+                    }
+                }
+
                 navigate(`/article/${formData.slug}`);
             } else {
                 throw new Error(result.error || 'Failed to update article');
