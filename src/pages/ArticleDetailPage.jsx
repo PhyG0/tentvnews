@@ -8,6 +8,7 @@ import { useAuthContext } from '../components/auth/AuthProvider';
 import { ArticleDetailSkeleton } from '../components/common/LoadingStates';
 import { isCreator, isAdmin } from '../utils/roles';
 import { Calendar, Eye, Edit, Trash2, ArrowLeft } from 'lucide-react';
+import { processContent } from '../utils/contentProcessor';
 
 const ArticleDetailPage = () => {
     const { slug } = useParams();
@@ -227,9 +228,7 @@ const ArticleDetailPage = () => {
                             prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline
                             prose-img:rounded-xl prose-img:shadow-lg
                             prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-6
-    import { processContent } from '../utils/contentProcessor';
-// ...
-                        prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm"
+                            prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm"
                         dangerouslySetInnerHTML={{ __html: processContent(article.content) }}
                     />
 
