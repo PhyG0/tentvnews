@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+
+  --color-secondary-50: #f0fdf4;
+  --color-secondary-100: #dcfce7;
+  --color-secondary-200: #bbf7d0;
+  --color-secondary-300: #86efac;
+  --color-secondary-400: #4ade80;
+  --color-secondary-500: #22c55e;
+  --color-secondary-600: #16a34a;
+  --color-secondary-700: #15803d;
+  --color-secondary-800: #166534;
+  --color-secondary-900: #14532d;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply text-gray-900 bg-gray-50 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-gray-900 tracking-tight leading-tight;
+  }
+
+  /* Ensure all images maintain aspect ratio and don't overflow */
+  img {
+    @apply max-w-full h-auto;
+  }
+}
+
+@layer components {
+
+  /* Common Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-full font-medium transition-all duration-200 gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply bg-gray-900 text-white hover:bg-gray-800 hover:-translate-y-0.5 shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300;
+  }
+
+  .btn-ghost {
+    @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-google {
+    @apply w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 relative;
+  }
+
+  /* Form Inputs */
+  .input {
+    @apply w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all placeholder-gray-400 text-base;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold text-gray-700 mb-1.5 ml-1;
+  }
+
+  /* Utilities */
+  .container {
+    @apply mx-auto px-4 max-w-7xl;
+  }
+}

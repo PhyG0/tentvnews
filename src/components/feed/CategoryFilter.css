@@ -1,0 +1,57 @@
+.category-filter {
+    margin-bottom: var(--space-6);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    min-width: min-content;
+}
+
+.category-btn {
+    padding: var(--space-3) var(--space-5);
+    background: white;
+    border: 2px solid var(--color-neutral-300);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-neutral-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.category-btn:hover {
+    border-color: var(--color-primary-500);
+    color: var(--color-primary-600);
+    transform: translateY(-2px);
+}
+
+.category-btn.active {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+    border-color: var(--color-primary-500);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.category-filter::-webkit-scrollbar {
+    height: 6px;
+}
+
+.category-filter::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-full);
+}
+
+.category-filter::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-400);
+    border-radius: var(--radius-full);
+}
+
+.category-filter::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-500);
+}

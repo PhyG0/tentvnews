@@ -1,0 +1,91 @@
+.rich-text-editor {
+    margin-bottom: var(--space-6);
+}
+
+.rich-text-editor .quill {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-neutral-300);
+}
+
+.rich-text-editor .ql-toolbar {
+    border: none;
+    border-bottom: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--color-neutral-50);
+    padding: var(--space-3);
+}
+
+.rich-text-editor .ql-container {
+    border: none;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    min-height: 400px;
+}
+
+.rich-text-editor .ql-editor {
+    padding: var(--space-6);
+    min-height: 400px;
+}
+
+.rich-text-editor .ql-editor.ql-blank::before {
+    color: var(--color-neutral-400);
+    font-style: normal;
+}
+
+/* Custom toolbar button styles */
+.rich-text-editor .ql-toolbar button {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+}
+
+.rich-text-editor .ql-toolbar button:hover {
+    background: var(--color-neutral-100);
+}
+
+.rich-text-editor .ql-toolbar button.ql-active {
+    background: var(--color-primary);
+    color: white;
+}
+
+.rich-text-editor .ql-toolbar .ql-stroke {
+    stroke: var(--color-neutral-600);
+}
+
+.rich-text-editor .ql-toolbar button.ql-active .ql-stroke {
+    stroke: white;
+}
+
+/* Editor content styling */
+.rich-text-editor .ql-editor h1 {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    margin-bottom: var(--space-4);
+}
+
+.rich-text-editor .ql-editor h2 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+}
+
+.rich-text-editor .ql-editor h3 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+}
+
+.rich-text-editor .ql-editor p {
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+}
+
+.rich-text-editor .ql-editor img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--space-4) 0;
+}

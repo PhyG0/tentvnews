@@ -1,0 +1,158 @@
+.profile-page {
+    background: var(--color-neutral-50);
+    min-height: calc(100vh - var(--header-height));
+}
+
+.profile-header {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    margin-bottom: var(--space-8);
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--color-neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-neutral-600);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+}
+
+.profile-name {
+    font-size: var(--text-3xl);
+    margin: 0;
+}
+
+.role-badge {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-viewer {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+}
+
+.role-creator {
+    background: var(--color-primary-100);
+    color: var(--color-primary);
+}
+
+.role-admin {
+    background: var(--color-secondary-100);
+    color: var(--color-secondary);
+}
+
+.profile-bio {
+    color: var(--color-neutral-700);
+    margin: var(--space-3) 0;
+    line-height: 1.6;
+}
+
+.profile-meta {
+    display: flex;
+    gap: var(--space-3);
+    color: var(--color-neutral-500);
+    font-size: var(--text-sm);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-value {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+}
+
+.stat-label {
+    color: var(--color-neutral-600);
+    font-size: var(--text-sm);
+}
+
+.profile-section {
+    margin-bottom: var(--space-8);
+}
+
+.section-title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-6);
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+
+.empty-state {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-12);
+    text-align: center;
+    color: var(--color-neutral-600);
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-name-row {
+        flex-direction: column;
+    }
+
+    .profile-meta {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+}
