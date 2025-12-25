@@ -48,6 +48,11 @@
   img {
     @apply max-w-full h-auto;
   }
+
+  /* Responsive iframe/video in prose content */
+  .prose iframe {
+    @apply w-full aspect-video rounded-xl shadow-lg my-6;
+  }
 }
 
 @layer components {

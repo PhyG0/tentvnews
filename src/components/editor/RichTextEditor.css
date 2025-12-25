@@ -89,3 +89,13 @@
     border-radius: var(--radius-md);
     margin: var(--space-4) 0;
 }
+
+/* Responsive video embed in editor */
+.rich-text-editor .ql-editor .ql-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--space-4) 0;
+    display: block;
+}
