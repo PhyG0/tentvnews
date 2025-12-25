@@ -80,8 +80,8 @@ const HomePage = () => {
     if (error) return <div className="container mx-auto px-4 py-8 text-center text-red-600">{error}</div>;
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-16">
-            <div className="container mx-auto px-4 pt-2 pb-6">
+        <div className="min-h-screen bg-gray-50 pt-8">
+            <div className="container mx-auto px-4 pt-1 pb-6">
                 {/* Search & Filter Section */}
                 <div className="mb-8 space-y-4">
                     {/* Search Bar */}
