@@ -50,7 +50,7 @@ const HomePage = () => {
     const [isFetchingMore] = useInfiniteScroll(loadMore, hasMore && !searchResults);
 
     // Show all articles regardless of language
-    const all Articles = searchResults || articles;
+    const allArticles = searchResults || articles;
     const rankedArticles = rankArticlesForFeed(allArticles);
 
     // Filter by selected states (multi-select)
