@@ -123,14 +123,31 @@ const ImageUploader = ({ onImageSelect, existingImageUrl, label = 'Cover Image',
                         </div>
                     )}
 
-                    <button
-                        type="button"
-                        className="remove-button"
-                        onClick={handleRemove}
-                        style={{ marginTop: optimizationInfo ? '12px' : '0' }}
-                    >
-                        Remove Image
-                    </button>
+                    <div className="flex gap-3 mt-3">
+                        <button
+                            type="button"
+                            className="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                            onClick={() => fileInputRef.current?.click()}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            Change Image
+                        </button>
+                        <button
+                            type="button"
+                            className="flex-1 px-4 py-2 bg-white border border-red-200 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center justify-center gap-2"
+                            onClick={handleRemove}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                            Remove
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div className="upload-area" onClick={() => fileInputRef.current?.click()}>

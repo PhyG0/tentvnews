@@ -233,6 +233,9 @@ const Header = () => {
                                         <LayoutDashboard size={18} /> {t('admin')}
                                     </Link>
                                 )}
+                                <Link to="/about" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setShowMobileMenu(false)}>
+                                    <span className="w-[18px] text-center">ℹ️</span> About Us
+                                </Link>
                             </div>
 
                             {/* Logout Button for Mobile */}
