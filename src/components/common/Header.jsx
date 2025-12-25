@@ -6,7 +6,7 @@ import LoginModal from '../auth/LoginModal';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from '../../hooks/useTranslation';
 import { isCreator, isAdmin } from '../../utils/roles';
-import { Menu, X, User, LogOut, PenTool, LayoutDashboard, FileText } from 'lucide-react';
+import { Menu, X, User, LogOut, PenTool, LayoutDashboard, FileText, Home, Info } from 'lucide-react';
 
 const Header = () => {
     const { t } = useTranslation();
@@ -216,7 +216,7 @@ const Header = () => {
                             {/* Navigation Links */}
                             <div className="border-t border-gray-200 pt-2 mt-2">
                                 <Link to="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setShowMobileMenu(false)}>
-                                    {t('home')}
+                                    <Home size={18} /> {t('home')}
                                 </Link>
                                 {isCreator(userProfile?.role) && (
                                     <>
@@ -234,7 +234,7 @@ const Header = () => {
                                     </Link>
                                 )}
                                 <Link to="/about" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 font-medium" onClick={() => setShowMobileMenu(false)}>
-                                    <span className="w-[18px] text-center">ℹ️</span> About Us
+                                    <Info size={18} /> About Us
                                 </Link>
                             </div>
 
