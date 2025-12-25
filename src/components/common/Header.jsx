@@ -48,6 +48,9 @@ const Header = () => {
                         <Link to="/" className={`text-sm font-medium transition-colors hover:text-primary-600 ${location.pathname === '/' ? 'text-primary-600' : 'text-gray-600'}`}>
                             {t('home')}
                         </Link>
+                        <Link to="/about" className={`text-sm font-medium transition-colors hover:text-primary-600 ${location.pathname === '/about' ? 'text-primary-600' : 'text-gray-600'}`}>
+                            About Us
+                        </Link>
                         {isCreator(userProfile?.role) && (
                             <>
                                 <Link to="/create" className={`text-sm font-medium transition-colors hover:text-primary-600 ${location.pathname === '/create' ? 'text-primary-600' : 'text-gray-600'}`}>

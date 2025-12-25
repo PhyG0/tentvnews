@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { optimizeImage, formatFileSize } from '../../utils/imageOptimization';
 import './ImageUploader.css';
 
@@ -9,6 +9,13 @@ const ImageUploader = ({ onImageSelect, existingImageUrl, label = 'Cover Image',
     const [error, setError] = useState(null);
     const [optimizationInfo, setOptimizationInfo] = useState(null);
     const fileInputRef = useRef(null);
+
+    // Sync preview when existingImageUrl changes (e.g. on edit page load)
+    useEffect(() => {
+        if (existingImageUrl && !preview) {
+            setPreview(existingImageUrl);
+        }
+    }, [existingImageUrl]);
 
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB (before optimization)
     const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];

@@ -86,6 +86,10 @@ const EditArticlePage = () => {
 
     const handleImageSelect = (file) => {
         setCoverImage(file);
+        // If image is removed (file is null), also clear the existing URL from state
+        if (file === null) {
+            setCoverImageUrl('');
+        }
     };
 
     const handleEditorImageUpload = async (file) => {

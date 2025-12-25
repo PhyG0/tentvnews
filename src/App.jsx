@@ -9,6 +9,7 @@ import EditArticlePage from './pages/EditArticlePage';
 import MyArticlesPage from './pages/MyArticlesPage';
 import AdminPage from './pages/AdminPage';
 import ProfilePage from './pages/ProfilePage';
+import AboutPage from './pages/AboutPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                                 <Route path="/article/:slug" element={<ArticleDetailPage />} />
                                 <Route path="/profile" element={<ProfilePage />} />
                                 <Route path="/profile/:userId" element={<ProfilePage />} />
+                                <Route path="/about" element={<AboutPage />} />
 
                                 {/* Creator Routes */}
                                 <Route
