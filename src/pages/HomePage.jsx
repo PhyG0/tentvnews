@@ -49,12 +49,9 @@ const HomePage = () => {
 
     const [isFetchingMore] = useInfiniteScroll(loadMore, hasMore && !searchResults);
 
-    // Filter articles by language
-    const languageFilteredArticles = (searchResults || articles).filter(
-        article => article.language === currentLanguage || !article.language
-    );
-
-    const rankedArticles = rankArticlesForFeed(languageFilteredArticles);
+    // Show all articles regardless of language
+    const all Articles = searchResults || articles;
+    const rankedArticles = rankArticlesForFeed(allArticles);
 
     // Filter by selected states (multi-select)
     const stateFilteredArticles = selectedStates.length > 0
