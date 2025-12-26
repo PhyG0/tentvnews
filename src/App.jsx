@@ -11,8 +11,36 @@ import AdminPage from './pages/AdminPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/AboutPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { useEffect } from 'react';
 
-function App() {
+const App = () => {
+    // Content Protection
+    useEffect(() => {
+        const handleContextMenu = (e) => {
+            e.preventDefault();
+            return false;
+        };
+
+        const handleKeyDown = (e) => {
+            // Prevent Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+P, F12
+            if (
+                (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p')) ||
+                e.key === 'F12'
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        document.addEventListener('contextmenu', handleContextMenu);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('contextmenu', handleContextMenu);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     return (
         <Router>
             <LanguageProvider>
