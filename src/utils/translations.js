@@ -55,6 +55,8 @@ export const translations = {
         lifestyle: 'జీవనశైలి',
         world: 'ప్రపంచం',
         spirituality: 'ఆధ్యాత్మికం',
+        news: 'వార్తలు',
+        crime: 'క్రైమ్',
 
         // Homepage
         featuredStories: 'ముఖ్య కథనాలు',
@@ -174,6 +176,8 @@ export const translations = {
         lifestyle: 'Lifestyle',
         world: 'World',
         spirituality: 'Spirituality',
+        news: 'News',
+        crime: 'Crime',
 
         // Homepage
         featuredStories: 'Featured Stories',

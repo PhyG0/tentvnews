@@ -13,7 +13,9 @@ export const CATEGORIES = [
     'Education',
     'Lifestyle',
     'World',
-    'Spirituality'
+    'Spirituality',
+    'News',
+    'Crime'
 ];
 
 // States (for multi-select filtering)

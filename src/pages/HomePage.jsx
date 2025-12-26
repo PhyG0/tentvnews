@@ -184,9 +184,33 @@ const HomePage = () => {
                                     />
 
                                     <CategorySection
+                                        title={t('news')}
+                                        articles={getArticlesByCategory('News')}
+                                        category="News"
+                                    />
+
+                                    <CategorySection
+                                        title={t('crime')}
+                                        articles={getArticlesByCategory('Crime')}
+                                        category="Crime"
+                                    />
+
+                                    <CategorySection
                                         title={t('spirituality')}
                                         articles={getArticlesByCategory('Spirituality')}
                                         category="Spirituality"
+                                    />
+
+                                    <CategorySection
+                                        title={t('news')}
+                                        articles={getArticlesByCategory('News')}
+                                        category="News"
+                                    />
+
+                                    <CategorySection
+                                        title={t('crime')}
+                                        articles={getArticlesByCategory('Crime')}
+                                        category="Crime"
                                     />
                                 </div>
 
