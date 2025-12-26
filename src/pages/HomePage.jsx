@@ -5,6 +5,7 @@ import CategoryFilter from '../components/feed/CategoryFilter';
 import StateFilter from '../components/feed/StateFilter';
 import SearchBar from '../components/feed/SearchBar';
 import CategorySection from '../components/common/CategorySection';
+import AdUnit from '../components/common/AdUnit';
 import { ListSkeleton } from '../components/common/LoadingStates';
 import { EmptyArticles, EmptySearchResults } from '../components/common/EmptyStates';
 import { useArticles } from '../hooks/useArticles';
@@ -152,6 +153,9 @@ const HomePage = () => {
                                         </div>
                                     </section>
 
+                                    {/* Ad Unit - Main Feed */}
+                                    <AdUnit slot="homepage_feed" />
+
                                     {/* Category Sections */}
                                     <CategorySection
                                         title={t('politics')}
@@ -216,6 +220,10 @@ const HomePage = () => {
 
                                 {/* Sidebar */}
                                 <aside className="lg:col-span-4">
+                                    {/* Ad Unit - Sidebar */}
+                                    <AdUnit slot="homepage_sidebar" />
+
+                                    {/* Trending Section */}
                                     {/* Trending Section */}
                                     <div className="bg-white rounded-xl border border-gray-200 p-6 sticky top-24 mb-6">
                                         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">

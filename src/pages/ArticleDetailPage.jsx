@@ -12,6 +12,7 @@ import { Calendar, Eye, Edit, Trash2, ArrowLeft, Share2 } from 'lucide-react';
 import { processContent } from '../utils/contentProcessor';
 import { Helmet } from 'react-helmet-async';
 import ShareModal from '../components/common/ShareModal';
+import AdUnit from '../components/common/AdUnit';
 
 const ArticleDetailPage = () => {
     const { slug } = useParams();
@@ -267,6 +268,9 @@ const ArticleDetailPage = () => {
                             prose-code:bg-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm"
                         dangerouslySetInnerHTML={{ __html: processContent(article.content) }}
                     />
+
+                    {/* Ad Unit - Below Article */}
+                    <AdUnit slot="article_bottom" />
 
                     {/* Tags */}
                     {article.tags && article.tags.length > 0 && (
