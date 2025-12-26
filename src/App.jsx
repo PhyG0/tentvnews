@@ -16,12 +16,24 @@ import { useEffect } from 'react';
 const App = () => {
     // Content Protection
     useEffect(() => {
+        const isProtectedParams = () => {
+            const path = window.location.pathname;
+            // Allow copy/paste on Create, Edit, and Admin pages
+            if (path.startsWith('/create') || path.startsWith('/edit') || path.startsWith('/admin')) {
+                return false;
+            }
+            return true;
+        };
+
         const handleContextMenu = (e) => {
+            if (!isProtectedParams()) return;
             e.preventDefault();
             return false;
         };
 
         const handleKeyDown = (e) => {
+            if (!isProtectedParams()) return;
+
             // Prevent Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+P, F12
             if (
                 (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p')) ||
