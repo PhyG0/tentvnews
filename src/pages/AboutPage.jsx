@@ -31,20 +31,18 @@ const AboutPage = () => {
 
                     {/* CEO */}
                     <div className="bg-white rounded-xl shadow-sm overflow-hidden md:flex max-w-2xl mx-auto mb-12 transform hover:-translate-y-1 transition-transform duration-300">
-                        <div className="md:w-1/2 bg-gray-200 h-64 md:h-auto flex items-center justify-center">
-                            {/* CEO Placeholder Image */}
-                            <div className="text-center">
-                                <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-2 flex items-center justify-center text-gray-500">
-                                    <span className="text-4xl">👤</span>
-                                </div>
-                                <span className="text-sm text-gray-500">Photo Placeholder</span>
-                            </div>
+                        <div className="md:w-1/2 h-64 md:h-auto relative">
+                            <img
+                                src="/ceo.jpg"
+                                alt="Siva Sankar Chalavadi"
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                         <div className="p-8 md:w-1/2 flex flex-col justify-center">
-                            <h3 className="text-2xl font-bold text-gray-900 mb-1">Prakash Raj</h3>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-1">Siva Sankar Chalavadi</h3>
                             <p className="text-primary-600 font-medium mb-4">Founder & CEO</p>
                             <p className="text-gray-600 mb-6 font-telugu">
-                                జర్నలిజంలో 15 సంవత్సరాలకు పైగా అనుభవంతో, డిజిటల్ వార్తా ప్రపంచంలో కొత్త ఒరవడిని సృష్టించాలనే లక్ష్యంతో ప్రకాష్ రాజ్ మా బృందాన్ని నడిపిస్తున్నారు.
+                                జర్నలిజంలో విశేష అనుభవంతో, స్వచ్ఛమైన మరియు నిష్పాక్షికమైన వార్తలను ప్రజలకు అందించాలనే సంకల్పంతో టెన్ టీవీ న్యూస్ స్థాపించారు.
                             </p>
                             <div className="flex gap-4">
                                 <a href="#" className="text-gray-400 hover:text-blue-500"><Twitter size={20} /></a>
@@ -55,17 +53,26 @@ const AboutPage = () => {
 
                     {/* Team Grid */}
                     <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center font-telugu">మా బృందం (Team)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[1, 2, 3].map((item) => (
-                            <div key={item} className="bg-white rounded-xl shadow-sm p-6 text-center transform hover:-translate-y-1 transition-transform duration-300">
-                                <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-gray-400">
-                                    <span className="text-3xl">👤</span>
-                                </div>
-                                <h4 className="text-lg font-bold text-gray-900">Team Member {item}</h4>
-                                <p className="text-primary-600 text-sm mb-2">Senior Editor</p>
-                                <p className="text-gray-500 text-sm font-telugu">రాజకీయ విశ్లేషణ మరియు సమకాలీన అంశాలలో నిపుణులు.</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        {/* Member 1 */}
+                        <div className="bg-white rounded-xl shadow-sm p-6 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                            <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-gray-100">
+                                <img src="/team1.jpg" alt="Siva Subramanyam CH" className="w-full h-full object-cover" />
                             </div>
-                        ))}
+                            <h4 className="text-lg font-bold text-gray-900">Siva Subramanyam CH</h4>
+                            <p className="text-primary-600 text-sm mb-2">Editor</p>
+                            <p className="text-gray-500 text-sm font-telugu">రాజకీయ విశ్లేషణ మరియు సమకాలీన అంశాలలో నిపుణులు.</p>
+                        </div>
+
+                        {/* Member 2 */}
+                        <div className="bg-white rounded-xl shadow-sm p-6 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                            <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-gray-100">
+                                <img src="/team2.png" alt="Chaitanya P" className="w-full h-full object-cover" />
+                            </div>
+                            <h4 className="text-lg font-bold text-gray-900">Chaitanya P</h4>
+                            <p className="text-primary-600 text-sm mb-2">Tech Lead & Editor</p>
+                            <p className="text-gray-500 text-sm font-telugu">సాంకేతిక మరియు డిజిటల్ మీడియా విభాగం.</p>
+                        </div>
                     </div>
                 </div>
 
