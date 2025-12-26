@@ -182,6 +182,12 @@ const HomePage = () => {
                                         articles={getArticlesByCategory('Business')}
                                         category="Business"
                                     />
+
+                                    <CategorySection
+                                        title={t('spirituality')}
+                                        articles={getArticlesByCategory('Spirituality')}
+                                        category="Spirituality"
+                                    />
                                 </div>
 
                                 {/* Sidebar */}
