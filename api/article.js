@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite';
 
-// Configure Firebase for Serverless Environment
+// Configure Firebase for serverless environment
 const firebaseConfig = {
     apiKey: process.env.VITE_FIREBASE_API_KEY,
     authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize or retrieve app
+// Initialize app
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
@@ -23,12 +23,11 @@ export default async function handler(req, res) {
     const baseUrl = `${protocol}://${host}`;
 
     try {
-        // 1. Fetch the static index.html template
-        // Using fetch to get the deployed index.html ensures we match the current build
+        // 1. Fetch template
         const templateResponse = await fetch(`${baseUrl}/index.html`);
         let html = await templateResponse.text();
 
-        // 2. Fetch Article Data
+        // 2. Fetch Article
         let article = null;
         if (slug) {
             const q = query(collection(db, 'articles'), where('slug', '==', slug));
@@ -39,24 +38,38 @@ export default async function handler(req, res) {
             }
         }
 
-        // 3. Inject Metadata if article found
+        // 3. Inject Metadata
         if (article) {
-            const title = `${article.title} - 10TV News`;
-            // Strip HTML from description
+            // Helper to escape HTML entities
+            const escapeHtml = (unsafe) => {
+                if (!unsafe) return "";
+                return String(unsafe)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            };
+
+            const title = escapeHtml(`${article.title} - 10TV News`);
             const rawDescription = article.summary || article.content || '';
-            const description = rawDescription.replace(/<[^>]*>/g, '').substring(0, 150) + '...';
-            const image = article.coverImageUrl || `${baseUrl}/logo.png`;
-            const url = `${baseUrl}/article/${slug}`;
+            const description = escapeHtml(rawDescription.replace(/<[^>]*>/g, '').substring(0, 150) + '...');
+
+            // Use cover image or fallback to logo
+            // IMPORTANT: Ensure URL is properly escaped for HTML attribute
+            const image = escapeHtml(article.coverImageUrl || `${baseUrl}/logo.png`);
+            const url = escapeHtml(`${baseUrl}/article/${slug}`);
 
             // Replace Title
             html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`);
 
-            // Replace/Add Meta Tags
-            // We'll simplisticly replace existing ones or inject new ones just before </head>
+            // Meta tags to inject
             const metaTags = `
                 <meta property="og:title" content="${title}" />
                 <meta property="og:description" content="${description}" />
                 <meta property="og:image" content="${image}" />
+                <meta property="og:image:secure_url" content="${image}" />
+                <meta property="og:type" content="article" />
                 <meta property="og:url" content="${url}" />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="${title}" />
@@ -64,21 +77,17 @@ export default async function handler(req, res) {
                 <meta name="twitter:image" content="${image}" />
             `;
 
-            // Inject before closing head
+            // Inject before </head>
             html = html.replace('</head>', `${metaTags}</head>`);
         }
 
-        // 4. Return HTML
         res.setHeader('Content-Type', 'text/html');
-        // Set Cache-Control to ensure fresh previews but allow some caching
-        // s-maxage=60 (CDN cache 1 min), stale-while-revalidate
         res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
         res.status(200).send(html);
 
     } catch (error) {
         console.error('SSR Error:', error);
-        // Fallback: redirects to index.html (client-side rendering)
-        // Or just fetch and return index.html without dynamic tags
+        // Fallback to basic index.html
         try {
             const templateResponse = await fetch(`${baseUrl}/index.html`);
             const html = await templateResponse.text();
