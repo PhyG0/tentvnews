@@ -24,6 +24,7 @@ const ArticleCard = ({ article, compact = false }) => {
         return (
             <Link
                 to={`/article/${article.slug}`}
+                state={{ fromApp: true }}
                 className="group block bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg hover:border-primary-300 transition-all duration-200"
             >
                 {/* Compact Image */}
@@ -81,6 +82,7 @@ const ArticleCard = ({ article, compact = false }) => {
     return (
         <Link
             to={`/article/${article.slug}`}
+            state={{ fromApp: true }}
             className="group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-xl hover:border-primary-200 hover:-translate-y-1 transition-all duration-300 h-full"
         >
             {/* Image Container */}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { format } from 'date-fns';
 import { getArticleBySlug, incrementViewCount, deleteArticle, getUserProfile } from '../services/firestore';
 import Toast from '../components/common/Toast';
@@ -15,6 +16,7 @@ import ShareModal from '../components/common/ShareModal';
 const ArticleDetailPage = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const { currentUser, userProfile } = useAuthContext();
 
     const [article, setArticle] = useState(null);
@@ -161,7 +163,13 @@ const ArticleDetailPage = () => {
             <div className="bg-white border-b border-gray-100">
                 <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <button
-                        onClick={() => navigate(-1)}
+                        onClick={() => {
+                            if (location.state?.fromApp) {
+                                navigate(-1);
+                            } else {
+                                navigate('/');
+                            }
+                        }}
                         className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         <ArrowLeft size={18} />
