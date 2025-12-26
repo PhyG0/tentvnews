@@ -1,4 +1,5 @@
 import { CATEGORIES } from '../../utils/constants';
+import { useTranslation } from '../../hooks/useTranslation';
 
 const CategoryFilter = ({ selected, onSelect }) => {
     const { t } = useTranslation();
