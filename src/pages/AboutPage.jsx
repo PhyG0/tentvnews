@@ -31,11 +31,11 @@ const AboutPage = () => {
 
                     {/* CEO */}
                     <div className="bg-white rounded-xl shadow-sm overflow-hidden md:flex max-w-2xl mx-auto mb-12 transform hover:-translate-y-1 transition-transform duration-300">
-                        <div className="md:w-1/2 h-64 md:h-auto relative">
+                        <div className="md:w-1/2 relative">
                             <img
                                 src="/ceo.jpg"
                                 alt="Siva Sankar Chalavadi"
-                                className="w-full h-full object-cover"
+                                className="w-full h-auto md:h-full object-cover object-top"
                             />
                         </div>
                         <div className="p-8 md:w-1/2 flex flex-col justify-center">
