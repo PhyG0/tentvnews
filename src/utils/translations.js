@@ -54,6 +54,7 @@ export const translations = {
         education: 'విద్య',
         lifestyle: 'జీవనశైలి',
         world: 'ప్రపంచం',
+        spirituality: 'ఆధ్యాత్మికం',
 
         // Homepage
         featuredStories: 'ముఖ్య కథనాలు',
@@ -172,6 +173,7 @@ export const translations = {
         education: 'Education',
         lifestyle: 'Lifestyle',
         world: 'World',
+        spirituality: 'Spirituality',
 
         // Homepage
         featuredStories: 'Featured Stories',
