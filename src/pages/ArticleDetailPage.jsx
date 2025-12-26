@@ -7,8 +7,10 @@ import ConfirmDialog from '../components/common/ConfirmDialog';
 import { useAuthContext } from '../components/auth/AuthProvider';
 import { ArticleDetailSkeleton } from '../components/common/LoadingStates';
 import { isCreator, isAdmin } from '../utils/roles';
-import { Calendar, Eye, Edit, Trash2, ArrowLeft } from 'lucide-react';
+import { Calendar, Eye, Edit, Trash2, ArrowLeft, Share2 } from 'lucide-react';
 import { processContent } from '../utils/contentProcessor';
+import { Helmet } from 'react-helmet-async';
+import ShareModal from '../components/common/ShareModal';
 
 const ArticleDetailPage = () => {
     const { slug } = useParams();
@@ -21,7 +23,9 @@ const ArticleDetailPage = () => {
     const [error, setError] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [toast, setToast] = useState(null);
+
     const [confirmDialog, setConfirmDialog] = useState(null);
+    const [showShareModal, setShowShareModal] = useState(false);
 
     useEffect(() => {
         loadArticle();
@@ -116,6 +120,23 @@ const ArticleDetailPage = () => {
 
     return (
         <article className="min-h-screen bg-gray-50">
+            {article && (
+                <Helmet>
+                    <title>{article.title} - 10TV News</title>
+                    <meta property="og:title" content={article.title} />
+                    <meta property="og:description" content={article.content ? article.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : ''} />
+                    <meta property="og:image" content={article.coverImageUrl || 'https://tentvnews.vercel.app/logo.png'} />
+                    <meta property="og:url" content={window.location.href} />
+                    <meta name="twitter:card" content="summary_large_image" />
+                </Helmet>
+            )}
+
+            <ShareModal
+                isOpen={showShareModal}
+                onClose={() => setShowShareModal(false)}
+                title={article?.title || 'Article'}
+                url={window.location.href}
+            />
             {/* Toast Notification */}
             {toast && (
                 <Toast
@@ -138,13 +159,20 @@ const ArticleDetailPage = () => {
             )}
             {/* Back Button */}
             <div className="bg-white border-b border-gray-100">
-                <div className="container mx-auto px-4 py-4">
+                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
                     <button
                         onClick={() => navigate(-1)}
                         className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         <ArrowLeft size={18} />
                         Back
+                    </button>
+                    <button
+                        onClick={() => setShowShareModal(true)}
+                        className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
+                    >
+                        <Share2 size={18} />
+                        Share
                     </button>
                 </div>
             </div>
