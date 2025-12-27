@@ -10,6 +10,8 @@ import MyArticlesPage from './pages/MyArticlesPage';
 import AdminPage from './pages/AdminPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/AboutPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Footer from './components/common/Footer';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { useEffect } from 'react';
 
@@ -105,6 +107,7 @@ const App = () => {
                                 />
 
                                 {/* 404 */}
+                                {/* 404 */}
                                 <Route path="*" element={
                                     <div className="container text-center pt-16">
                                         <h1>404 - Page Not Found</h1>
@@ -112,8 +115,10 @@ const App = () => {
                                         <a href="/" className="btn btn-primary mt-4">Go Home</a>
                                     </div>
                                 } />
+                                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                             </Routes>
                         </main>
+                        <Footer />
                     </div>
                 </AuthProvider>
             </LanguageProvider>

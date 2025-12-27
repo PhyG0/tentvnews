@@ -18,6 +18,7 @@ const EditArticlePage = () => {
         title: '',
         slug: '',
         category: CATEGORIES[0],
+        authorName: '',
         tags: '',
         content: '',
         status: ARTICLE_STATUS.DRAFT
@@ -57,14 +58,7 @@ const EditArticlePage = () => {
                     title: article.title,
                     slug: article.slug,
                     category: article.category,
-                    tags: article.tags?.join(', ') || '',
-                    content: article.content,
-                    status: article.status
-                });
-                setFormData({
-                    title: article.title,
-                    slug: article.slug,
-                    category: article.category,
+                    authorName: article.authorName || '',
                     tags: article.tags?.join(', ') || '',
                     content: article.content,
                     status: article.status
@@ -156,6 +150,7 @@ const EditArticlePage = () => {
                 slug: formData.slug,
                 content: formData.content,
                 category: formData.category,
+                authorName: formData.authorName,
                 tags: formData.tags
                     .split(',')
                     .map(tag => tag.trim())
@@ -314,6 +309,19 @@ const EditArticlePage = () => {
                                     <option key={cat} value={cat}>{cat}</option>
                                 ))}
                             </select>
+                        </div>
+
+                        <div className="bg-white rounded-xl border border-gray-200 p-6">
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Article Written By
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.authorName}
+                                onChange={(e) => setFormData(prev => ({ ...prev, authorName: e.target.value }))}
+                                placeholder="Enter author name"
+                                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                            />
                         </div>
 
                         <div className="bg-white rounded-xl border border-gray-200 p-6">

@@ -1,4 +1,11 @@
+import { Link } from 'react-router-dom';
+import { useAuthContext } from '../auth/AuthProvider';
+import { isCreator, isAdmin } from '../../utils/roles';
+
 export const EmptyArticles = ({ message = 'No articles found' }) => {
+    const { userProfile } = useAuthContext();
+    const canCreate = userProfile && (isCreator(userProfile.role) || isAdmin(userProfile.role));
+
     return (
         <div className="text-center pt-16 pb-16">
             <div className="empty-state-icon">
@@ -9,9 +16,17 @@ export const EmptyArticles = ({ message = 'No articles found' }) => {
             <h3 style={{ color: 'var(--color-neutral-600)', marginBottom: 'var(--space-2)' }}>
                 {message}
             </h3>
-            <p style={{ color: 'var(--color-neutral-500)' }}>
+            <p style={{ color: 'var(--color-neutral-500)', marginBottom: canCreate ? 'var(--space-6)' : 0 }}>
                 Check back later for new content
             </p>
+            {canCreate && (
+                <Link to="/create" className="btn btn-primary mt-4 inline-flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Write First Article
+                </Link>
+            )}
         </div>
     );
 };

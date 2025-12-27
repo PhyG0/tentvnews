@@ -19,6 +19,7 @@ const CreateArticlePage = () => {
         slug: '',
         category: CATEGORIES[0],
         states: [], // Multi-select states field
+        authorName: userProfile?.name || '',
         tags: '',
         content: '',
         status: ARTICLE_STATUS.DRAFT,
@@ -131,7 +132,7 @@ const CreateArticlePage = () => {
                     .filter(tag => tag),
                 coverImageUrl: imageUrl,
                 authorId: currentUser.uid,
-                authorName: userProfile?.name || 'Anonymous',
+                authorName: formData.authorName || userProfile?.name || 'Anonymous',
                 status: publishNow ? ARTICLE_STATUS.PUBLISHED : formData.status,
                 language: formData.language,
                 states: formData.states // Include states array
@@ -230,7 +231,7 @@ const CreateArticlePage = () => {
                         </div>
                     </div>
 
-                    {/* Category & Tags */}
+                    {/* Category & Tags & Author */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-white rounded-xl border border-gray-200 p-6">
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -246,6 +247,19 @@ const CreateArticlePage = () => {
                                     <option key={cat} value={cat}>{cat}</option>
                                 ))}
                             </select>
+                        </div>
+
+                        <div className="bg-white rounded-xl border border-gray-200 p-6">
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Article Written By
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.authorName}
+                                onChange={(e) => setFormData(prev => ({ ...prev, authorName: e.target.value }))}
+                                placeholder="Enter author name"
+                                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all"
+                            />
                         </div>
 
                         <div className="bg-white rounded-xl border border-gray-200 p-6">
@@ -287,8 +301,8 @@ const CreateArticlePage = () => {
                                             }
                                         }}
                                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${formData.states.includes(state)
-                                                ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-md'
-                                                : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                            ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-md'
+                                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
                                         {state}
