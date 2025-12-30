@@ -49,12 +49,11 @@ const RichTextEditor = ({ value, onChange, onImageUpload, placeholder = 'Write y
 
     // Custom video handler
     const videoHandler = () => {
-        const url = prompt('Enter video URL (YouTube, Vimeo):');
+        const url = prompt('Enter video URL (YouTube, Vimeo, Dailymotion):');
         if (url) {
             let finalUrl = url;
 
-            // Convert YouTube watch URL to embed URL
-            // Pattern: https://www.youtube.com/watch?v=VIDEO_ID -> https://www.youtube.com/embed/VIDEO_ID
+            // YouTube
             if (url.includes('youtube.com/watch?v=')) {
                 finalUrl = url.replace('watch?v=', 'embed/');
                 // Remove any other query params
@@ -62,9 +61,17 @@ const RichTextEditor = ({ value, onChange, onImageUpload, placeholder = 'Write y
                     finalUrl = finalUrl.split('&')[0];
                 }
             }
-            // Pattern: https://youtu.be/VIDEO_ID -> https://www.youtube.com/embed/VIDEO_ID
             else if (url.includes('youtu.be/')) {
                 finalUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+            }
+            // Dailymotion
+            else if (url.includes('dai.ly/')) {
+                const id = url.split('dai.ly/')[1];
+                finalUrl = `https://www.dailymotion.com/embed/video/${id}`;
+            }
+            else if (url.includes('dailymotion.com/video/')) {
+                const id = url.split('dailymotion.com/video/')[1].split('?')[0]; // Handle query params if any
+                finalUrl = `https://www.dailymotion.com/embed/video/${id}`;
             }
 
             const quill = quillRef.current.getEditor();

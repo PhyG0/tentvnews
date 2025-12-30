@@ -10,14 +10,43 @@ export const processContent = (htmlContent) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
 
+        // Helper to get video details
+        const getVideoDetails = (url) => {
+            if (!url) return null;
+
+            // YouTube
+            const youtubeRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const youtubeMatch = url.match(youtubeRegExp);
+            if (youtubeMatch && youtubeMatch[2].length === 11) {
+                return {
+                    platform: 'youtube',
+                    id: youtubeMatch[2],
+                    embedUrl: `https://www.youtube.com/embed/${youtubeMatch[2]}`
+                };
+            }
+
+            // Dailymotion
+            const dailymotionRegExp = /(?:dailymotion\.com\/video\/|dai\.ly\/)([a-zA-Z0-9]+)/;
+            const dailymotionMatch = url.match(dailymotionRegExp);
+            if (dailymotionMatch && dailymotionMatch[1]) {
+                return {
+                    platform: 'dailymotion',
+                    id: dailymotionMatch[1],
+                    embedUrl: `https://www.dailymotion.com/embed/video/${dailymotionMatch[1]}`
+                };
+            }
+
+            return null;
+        };
+
         // Helper to create iframe
-        const createEmbed = (videoId) => {
+        const createEmbed = (videoDetails) => {
             const wrapper = doc.createElement('div');
             wrapper.className = 'w-full aspect-video rounded-xl shadow-lg my-6 overflow-hidden';
 
             const iframe = doc.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${videoId}`;
-            iframe.title = "YouTube video player";
+            iframe.src = videoDetails.embedUrl;
+            iframe.title = `${videoDetails.platform} video player`;
             iframe.frameBorder = "0";
             iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
             iframe.allowFullscreen = true;
@@ -27,41 +56,33 @@ export const processContent = (htmlContent) => {
             return wrapper;
         };
 
-        // Extract Video ID from URL
-        const getVideoId = (url) => {
-            if (!url) return null;
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        };
-
-        // 1. Convert <p> tags that contain ONLY a YouTube link (text)
+        // 1. Convert <p> tags that contain ONLY a video link (text)
         const paragraphs = doc.querySelectorAll('p');
         paragraphs.forEach(p => {
             // Check if paragraph text is just a URL
             const text = p.textContent.trim();
-            const videoId = getVideoId(text);
+            const videoDetails = getVideoDetails(text);
 
-            // Allow simplified check: if it looks like a youtube url and nothing else
-            if (videoId && (text.includes('youtube.com') || text.includes('youtu.be'))) {
-                const embed = createEmbed(videoId);
+            // Allow simplified check: if it looks like a supported url
+            if (videoDetails) {
+                const embed = createEmbed(videoDetails);
                 p.parentNode.replaceChild(embed, p);
             }
         });
 
-        // 2. Convert <a> tags that link to YouTube
+        // 2. Convert <a> tags that link to Video
         const anchors = doc.querySelectorAll('a');
         anchors.forEach(a => {
             const href = a.getAttribute('href');
-            const videoId = getVideoId(href);
+            const videoDetails = getVideoDetails(href);
 
-            if (videoId) {
+            if (videoDetails) {
                 // Determine if we should replace. 
                 // Policy: If it's a standalone link in a paragraph, definitely replace.
                 // If it's inline in text... maybe not?
                 // For now, let's aggressively replace if user wants video.
                 // Safest: Replace the ANCHOR with the EMBED.
-                const embed = createEmbed(videoId);
+                const embed = createEmbed(videoDetails);
                 a.parentNode.replaceChild(embed, a);
             }
         });
